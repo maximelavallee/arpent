@@ -1,0 +1,12 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "ca.arpent.app",
+      "sha256_cert_fingerprints": [
+        "B7:9E:77:74:28:9C:C6:1B:77:BC:0A:68:06:40:6B:3A:32:DF:54:3B:DA:2E:78:AC:E7:DB:46:97:77:EE:A7:66"
+      ]
+    }
+  }
+]
