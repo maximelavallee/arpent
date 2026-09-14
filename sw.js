@@ -11,7 +11,7 @@
 // Rien ne change sous ses doigts pendant qu'il calcule un mélange.
 //
 // VERSION est réécrite par build.sh à chaque compilation.
-const VERSION = "2026.09.13";
+const VERSION = "2026.09.14";
 const CACHE = `convertisseur-${VERSION}`;
 
 const ASSETS = [
