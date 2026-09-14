@@ -1,7 +1,7 @@
 {
-  "name": "Convertisseur agricole",
-  "short_name": "Convertisseur",
-  "description": "Taux, doses et rendements en unités québécoises. Fonctionne hors ligne.",
+  "name": "Arpent — convertisseur agricole",
+  "short_name": "Arpent",
+  "description": "Conversions et calculs agricoles québécois, même sans réseau",
   "lang": "fr-CA",
   "start_url": "./",
   "scope": "./",
