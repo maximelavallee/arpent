@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr-CA">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f4f4ec">
+<meta name="description" content="Taux, doses et rendements en unités québécoises. Fonctionne hors ligne.">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icone-192.png">
+<link rel="apple-touch-icon" href="./icone-192.png">
+<title>Convertisseur agricole</title>
+<style>
+  html, body { margin: 0; padding: 0; background: #f4f4ec; }
+  * { -webkit-tap-highlight-color: transparent; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script src="./app.js"></script>
+<script>
+// Enregistrement du service worker. Quand une nouvelle version est prête,
+// elle reste en attente : on prévient l'app, qui affiche un bandeau.
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("./sw.js").then(function (reg) {
+      function signaler(sw) {
+        window.__convMaj = true;
+        window.__convAppliquerMaj = function () { sw.postMessage("appliquer-maj"); };
+        window.dispatchEvent(new Event("conv-maj"));
+      }
+      if (reg.waiting) signaler(reg.waiting);
+      reg.addEventListener("updatefound", function () {
+        var sw = reg.installing;
+        if (!sw) return;
+        sw.addEventListener("statechange", function () {
+          // « installed » avec un contrôleur déjà en place = mise à jour en attente
+          if (sw.state === "installed" && navigator.serviceWorker.controller) signaler(sw);
+        });
+      });
+      // Une vérification par ouverture, et une par heure si l'app reste ouverte
+      reg.update();
+      setInterval(function () { reg.update(); }, 3600000);
+    }).catch(function () { /* pas de service worker : l'app fonctionne quand même */ });
+
+    var recharge = false;
+    navigator.serviceWorker.addEventListener("controllerchange", function () {
+      if (recharge) return;
+      recharge = true;
+      window.location.reload();
+    });
+  });
+}
+</script>
+</body>
+</html>
